@@ -62,7 +62,7 @@ function createWindow() {
         resizable: true,       // リサイズ可能
         maximizable: true,     // 最大化可能
         webPreferences: {
-            preload: path.join(__dirname, 'preload.js'),
+            preload: path.join(__dirname, 'src', 'preload.js'),
             contextIsolation: true,
             nodeIntegration: false,
         },
@@ -81,12 +81,12 @@ function createWindow() {
                 {
                     label: '🎲 ビンゴ画面',
                     accelerator: 'CmdOrCtrl+1',
-                    click: () => mainWindow.loadFile('bingo.html'),
+                    click: () => mainWindow.loadFile(path.join('src', 'bingo.html')),
                 },
                 {
                     label: '⚙️ 景品管理',
                     accelerator: 'CmdOrCtrl+2',
-                    click: () => mainWindow.loadFile('admin.html'),
+                    click: () => mainWindow.loadFile(path.join('src', 'admin.html')),
                 },
                 { type: 'separator' },
                 {
@@ -134,7 +134,7 @@ function createWindow() {
     const menu = Menu.buildFromTemplate(menuTemplate);
     Menu.setApplicationMenu(menu);
 
-    mainWindow.loadFile('bingo.html');
+    mainWindow.loadFile(path.join('src', 'bingo.html'));
 }
 
 // --- IPC ハンドラー ---
@@ -196,11 +196,11 @@ function setupIPC() {
 
     // 画面切り替え
     ipcMain.handle('navigate:bingo', () => {
-        mainWindow.loadFile('bingo.html');
+        mainWindow.loadFile(path.join('src', 'bingo.html'));
     });
 
     ipcMain.handle('navigate:admin', () => {
-        mainWindow.loadFile('admin.html');
+        mainWindow.loadFile(path.join('src', 'admin.html'));
     });
 }
 
