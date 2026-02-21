@@ -1,5 +1,10 @@
-// ==== 景品リストと画像ファイルの名前を入力します =====================
-const originalPrizes = [
+// ==== 景品データの読み込み =====================
+// Electron環境ではJSONファイルから読み込み、通常のブラウザ環境ではフォールバック用データを使用
+let originalPrizes = [];
+let imagesBasePath = '';
+
+// フォールバック用：Electron外で動作する場合のデフォルト景品データ
+const fallbackPrizes = [
     { title: "キッチンバサミ", description: "新潟・燕三条エリアの職人が作る、切れ味抜群のキッチンばさみです。", image: "hasami2.jpg" },
     { title: "iPhone 17 Pro シルバー", description: "今話題の最新スマホです。512GBで容量も文句無し！", image: "iPhone17pro2.jpg" },
     { title: "箱根小涌園 天悠", description: "箱根で話題の高級旅館です。2名様平休日1泊2食付となってます。", image: "hakone2.jpg" },
@@ -37,8 +42,10 @@ function initGame() {
     container.innerHTML = "";
     resultEl.textContent = "";
 
-    // 15枚のカードを生成※景品の数を変更したい場合はここを修正してください
-    for (let i = 0; i < 15; i++) {
+    // カード枚数は景品数に合わせる
+    const cardCount = prizes.length;
+
+    for (let i = 0; i < cardCount; i++) {
         const card = document.createElement("button");
         card.className = "card";
         card.type = "button";
@@ -48,6 +55,12 @@ function initGame() {
         card.addEventListener("click", () => handleCardClick(card));
 
         container.appendChild(card);
+    }
+
+    // 説明文を景品数に合わせて更新
+    const descEl = document.getElementById("description");
+    if (descEl) {
+        descEl.innerHTML = `当選された方は、下の <strong>1〜${cardCount}</strong> のカードから好きな番号を1つ選んでクリックしてください。<br>`;
     }
 }
 
@@ -84,6 +97,17 @@ function handleCardClick(card) {
     }, 800); 
 }
 
+// 画像パスを解決する関数
+function resolveImagePath(imageName) {
+    if (!imageName) return '';
+    if (imagesBasePath) {
+        // Electron環境: imagesフォルダのフルパスを使用
+        return `file://${imagesBasePath}/${imageName}`;
+    }
+    // 通常のブラウザ環境: 相対パス
+    return imageName;
+}
+
 // モーダル表示関数
 function openPrizeModal(prize, cardNumber, card) {
     const backdrop = document.createElement("div");
@@ -91,6 +115,8 @@ function openPrizeModal(prize, cardNumber, card) {
 
     const modal = document.createElement("div");
     modal.className = "modal";
+
+    const imageSrc = resolveImagePath(prize.image);
 
     modal.innerHTML = `
         <div class="modal-inner">
@@ -100,8 +126,8 @@ function openPrizeModal(prize, cardNumber, card) {
 
             <div class="modal-image-big">
                 ${
-                    prize.image
-                        ? `<img src="${prize.image}" alt="${prize.title}">`
+                    imageSrc
+                        ? `<img src="${imageSrc}" alt="${prize.title}">`
                         : `<span style="font-size:18px; opacity:0.7; color:#4b5563;">景品画像は準備中です</span>`
                 }
             </div>
@@ -175,7 +201,42 @@ function launchConfetti() {
     }
 }
 
-// リセット/効果音ボタンに関するイベントリスナーは削除しました
+// --- 起動処理 ---
+async function startApp() {
+    // Electron環境かどうかを判定
+    if (window.electronAPI) {
+        // Electron環境: JSONファイルから景品を読み込み
+        try {
+            imagesBasePath = await window.electronAPI.getImagesPath();
+            const loaded = await window.electronAPI.loadPrizes();
+            if (loaded && loaded.length > 0) {
+                originalPrizes = loaded;
+            } else {
+                originalPrizes = fallbackPrizes;
+            }
+        } catch (err) {
+            console.error('景品データの読み込みに失敗しました:', err);
+            originalPrizes = fallbackPrizes;
+        }
 
-// ゲーム開始
-initGame();
+        // ナビゲーションバーを表示
+        const navBar = document.getElementById('nav-bar');
+        if (navBar) {
+            navBar.style.display = 'flex';
+            const adminBtn = document.getElementById('btn-go-admin');
+            if (adminBtn) {
+                adminBtn.addEventListener('click', () => {
+                    window.electronAPI.navigateToAdmin();
+                });
+            }
+        }
+    } else {
+        // 通常のブラウザ環境: フォールバックデータを使用
+        originalPrizes = fallbackPrizes;
+    }
+
+    initGame();
+}
+
+// アプリ開始
+startApp();

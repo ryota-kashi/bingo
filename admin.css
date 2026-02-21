@@ -1,0 +1,462 @@
+/* ============================= */
+/* ====== リセット＆ベース ===== */
+/* ============================= */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  min-height: 100vh;
+  background: #f0f2f5;
+  color: #1a1a2e;
+}
+
+/* ============================= */
+/* ====== アプリコンテナ ======= */
+/* ============================= */
+.admin-app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 32px 48px;
+}
+
+/* ============================= */
+/* ====== ヘッダー ============= */
+/* ============================= */
+.admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  padding-bottom: 20px;
+  border-bottom: 3px solid #e2e8f0;
+}
+
+.admin-header h1 {
+  font-size: 32px;
+  font-weight: 900;
+  color: #005bbb;
+  letter-spacing: 0.05em;
+}
+
+/* ============================= */
+/* ====== ボタン =============== */
+/* ============================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 22px;
+  font-size: 15px;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #005bbb, #0099ff);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(0, 91, 187, 0.35);
+}
+.btn-primary:hover {
+  box-shadow: 0 6px 20px rgba(0, 91, 187, 0.5);
+}
+
+.btn-secondary {
+  background: #e2e8f0;
+  color: #334155;
+}
+.btn-secondary:hover {
+  background: #cbd5e1;
+}
+
+.btn-success {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+  font-size: 16px;
+  padding: 12px 28px;
+}
+.btn-success:hover {
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: #64748b;
+  border: 2px solid #e2e8f0;
+  padding: 10px 22px;
+}
+.btn-ghost:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.btn-danger {
+  background: #fee2e2;
+  color: #dc2626;
+}
+.btn-danger:hover {
+  background: #fecaca;
+}
+
+.btn-edit {
+  background: #dbeafe;
+  color: #2563eb;
+}
+.btn-edit:hover {
+  background: #bfdbfe;
+}
+
+.btn-sm {
+  padding: 6px 14px;
+  font-size: 13px;
+  border-radius: 8px;
+}
+
+/* ============================= */
+/* ====== フォームセクション === */
+/* ============================= */
+.form-section {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 28px 32px;
+  margin-bottom: 28px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e2e8f0;
+}
+
+.form-section h2 {
+  font-size: 22px;
+  font-weight: 800;
+  color: #1e293b;
+  margin-bottom: 20px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 700;
+  color: #475569;
+}
+
+.required {
+  color: #ef4444;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"] {
+  padding: 10px 14px;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 15px;
+  transition: border-color 0.15s ease;
+  outline: none;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="number"]:focus {
+  border-color: #0099ff;
+  box-shadow: 0 0 0 3px rgba(0, 153, 255, 0.15);
+}
+
+/* ============================= */
+/* ====== 画像セクション ======= */
+/* ============================= */
+.image-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.file-name {
+  font-size: 13px;
+  color: #94a3b8;
+  font-style: italic;
+}
+
+.image-preview-container {
+  margin-top: 12px;
+  border: 2px dashed #e2e8f0;
+  border-radius: 12px;
+  padding: 12px;
+  text-align: center;
+  background: #f8fafc;
+}
+
+.image-preview {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+/* ============================= */
+/* ====== リサイズ設定 ========= */
+/* ============================= */
+.resize-controls {
+  display: flex;
+  gap: 16px;
+}
+
+.resize-input-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.resize-input-group label {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.resize-input-group input {
+  padding: 8px 12px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+}
+
+.resize-input-group input:focus {
+  border-color: #0099ff;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #475569;
+  margin-top: 8px;
+  cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #0099ff;
+}
+
+.resize-info {
+  font-size: 12px;
+  color: #94a3b8;
+  margin-top: 4px;
+  min-height: 18px;
+}
+
+/* ============================= */
+/* ====== フォームアクション === */
+/* ============================= */
+.form-actions {
+  display: flex;
+  gap: 12px;
+  padding-top: 4px;
+}
+
+/* ============================= */
+/* ====== 景品一覧 ============= */
+/* ============================= */
+.list-section {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 28px 32px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e2e8f0;
+}
+
+.list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.list-header h2 {
+  font-size: 22px;
+  font-weight: 800;
+  color: #1e293b;
+}
+
+.prize-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ============================= */
+/* ====== 景品アイテム ========= */
+/* ============================= */
+.prize-item {
+  display: grid;
+  grid-template-columns: 50px 80px 1fr auto;
+  gap: 16px;
+  align-items: center;
+  padding: 14px 18px;
+  background: #f8fafc;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.15s ease;
+}
+
+.prize-item:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.prize-index {
+  font-size: 20px;
+  font-weight: 800;
+  color: #94a3b8;
+  text-align: center;
+}
+
+.prize-thumbnail {
+  width: 80px;
+  height: 60px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.prize-thumbnail img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+.prize-thumbnail .no-image {
+  font-size: 11px;
+  color: #94a3b8;
+  text-align: center;
+}
+
+.prize-info {
+  min-width: 0;
+}
+
+.prize-info .prize-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.prize-info .prize-description {
+  font-size: 13px;
+  color: #64748b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.prize-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* ============================= */
+/* ====== 空状態メッセージ ===== */
+/* ============================= */
+.empty-message {
+  text-align: center;
+  padding: 48px 20px;
+  color: #94a3b8;
+  font-size: 16px;
+}
+
+/* ============================= */
+/* ====== トースト通知 ========= */
+/* ============================= */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  padding: 14px 24px;
+  background: #1e293b;
+  color: #fff;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+  animation: toast-in 0.3s ease-out;
+}
+
+.toast.toast-success {
+  background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.toast.toast-error {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================= */
+/* ====== レスポンシブ ========= */
+/* ============================= */
+@media (max-width: 860px) {
+  .admin-app {
+    padding: 16px;
+  }
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+  .prize-item {
+    grid-template-columns: 40px 60px 1fr;
+    gap: 10px;
+  }
+  .prize-actions {
+    grid-column: 1 / -1;
+    justify-content: flex-end;
+  }
+  .admin-header {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+}

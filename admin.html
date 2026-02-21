@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>景品管理 - BINGO景品くじ</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <div class="admin-app">
+        <!-- ヘッダー -->
+        <header class="admin-header">
+            <h1>⚙️ 景品管理</h1>
+            <div class="header-actions">
+                <button id="btn-go-bingo" class="btn btn-primary" type="button">🎲 ビンゴ画面へ</button>
+            </div>
+        </header>
+
+        <!-- 追加/編集フォーム -->
+        <section class="form-section">
+            <h2 id="form-title">景品を追加</h2>
+            <form id="prize-form" class="prize-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="prize-name">景品名 <span class="required">*</span></label>
+                        <input type="text" id="prize-name" placeholder="例: iPhone 17 Pro" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="prize-desc">説明</label>
+                        <input type="text" id="prize-desc" placeholder="例: 最新スマホです！" />
+                    </div>
+                </div>
+
+                <!-- 画像セクション -->
+                <div class="form-row">
+                    <div class="form-group image-group">
+                        <label>景品画像</label>
+                        <div class="image-controls">
+                            <button type="button" id="btn-select-image" class="btn btn-secondary">📁 画像を選択</button>
+                            <span id="selected-file-name" class="file-name">未選択</span>
+                        </div>
+                        <div id="image-preview-container" class="image-preview-container" style="display:none;">
+                            <img id="image-preview" class="image-preview" alt="プレビュー" />
+                        </div>
+                    </div>
+
+                    <div class="form-group resize-group">
+                        <label>画像リサイズ</label>
+                        <div class="resize-controls">
+                            <div class="resize-input-group">
+                                <label for="resize-width">幅 (px)</label>
+                                <input type="number" id="resize-width" placeholder="例: 800" min="1" />
+                            </div>
+                            <div class="resize-input-group">
+                                <label for="resize-height">高さ (px)</label>
+                                <input type="number" id="resize-height" placeholder="例: 600" min="1" />
+                            </div>
+                        </div>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="keep-aspect" checked />
+                            アスペクト比を維持
+                        </label>
+                        <div id="resize-info" class="resize-info"></div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" id="btn-submit" class="btn btn-success">＋ 追加する</button>
+                    <button type="button" id="btn-cancel" class="btn btn-ghost" style="display:none;">キャンセル</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- 景品一覧 -->
+        <section class="list-section">
+            <div class="list-header">
+                <h2>登録済み景品 (<span id="prize-count">0</span>件)</h2>
+            </div>
+            <div id="prize-list" class="prize-list"></div>
+        </section>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>

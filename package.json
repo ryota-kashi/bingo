@@ -1,0 +1,43 @@
+{
+  "name": "bingo-prize-app",
+  "version": "1.0.0",
+  "description": "BINGO景品くじアプリ - 景品管理機能付き",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win",
+    "build:dir": "electron-builder --win --dir"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^34.0.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.bingo.prize-app",
+    "productName": "BINGO景品くじ",
+    "win": {
+      "target": "portable",
+      "icon": null,
+      "signAndEditExecutable": false
+    },
+    "portable": {
+      "artifactName": "BINGO景品くじ.${ext}"
+    },
+    "files": [
+      "**/*",
+      "!node_modules/.cache/**"
+    ],
+    "extraResources": [
+      {
+        "from": "data",
+        "to": "data"
+      },
+      {
+        "from": "images",
+        "to": "images"
+      }
+    ]
+  }
+}

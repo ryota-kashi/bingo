@@ -1,0 +1,23 @@
+# Node.js
+node_modules/
+package-lock.json
+
+# ビルド成果物
+dist/
+out/
+*.exe
+
+# OS生成ファイル
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# エディタ設定
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 一時ファイル
+*.log
+*.tmp

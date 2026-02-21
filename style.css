@@ -416,3 +416,36 @@ h1 {
     .card-selected { transform: translateY(-8px) scale(1.15) !important; }
     #result { font-size: 24px; }
 }
+
+/* ============================= */
+/* ====== ナビゲーション ====== */
+/* ============================= */
+.nav-bar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 12px;
+}
+
+.nav-btn {
+    padding: 8px 20px;
+    font-size: 14px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #005BBB, #0099FF);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    box-shadow: 0 3px 10px rgba(0, 91, 187, 0.3);
+}
+
+.nav-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 15px rgba(0, 91, 187, 0.45);
+}
+
+/* ====== カード暗転 ====== */
+.card-dimmed {
+    opacity: 0.4;
+    filter: grayscale(0.5);
+}
