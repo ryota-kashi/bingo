@@ -27,21 +27,27 @@ function ensureDirectories() {
     if (!fs.existsSync(imagesDir)) fs.mkdirSync(imagesDir, { recursive: true });
 }
 
-// --- 景品データの読み書き ---
-function getPrizesFilePath() {
-    return path.join(getDataPath(), 'prizes.json');
+// --- 設定（タイトルなど）の読み書き ---
+function getSettingsFilePath() {
+    return path.join(getDataPath(), 'settings.json');
 }
 
-function loadPrizes() {
-    const filePath = getPrizesFilePath();
-    if (!fs.existsSync(filePath)) return [];
+function loadSettings() {
+    const filePath = getSettingsFilePath();
+    if (!fs.existsSync(filePath)) {
+        return { appTitle: 'BINGO景品' };
+    }
     const raw = fs.readFileSync(filePath, 'utf-8');
-    return JSON.parse(raw);
+    try {
+        return JSON.parse(raw);
+    } catch (e) {
+        return { appTitle: 'BINGO景品' };
+    }
 }
 
-function savePrizes(prizes) {
-    const filePath = getPrizesFilePath();
-    fs.writeFileSync(filePath, JSON.stringify(prizes, null, 2), 'utf-8');
+function saveSettings(settings) {
+    const filePath = getSettingsFilePath();
+    fs.writeFileSync(filePath, JSON.stringify(settings, null, 2), 'utf-8');
 }
 
 // --- メインウィンドウ ---
@@ -53,6 +59,8 @@ function createWindow() {
     const { width: screenWidth, height: screenHeight } = primaryDisplay.workAreaSize;
     const initialWidth = Math.round(screenWidth * 0.85);
     const initialHeight = Math.round(screenHeight * 0.85);
+
+    const settings = loadSettings();
 
     mainWindow = new BrowserWindow({
         width: initialWidth,
@@ -66,7 +74,7 @@ function createWindow() {
             contextIsolation: true,
             nodeIntegration: false,
         },
-        title: 'BINGO景品くじ',
+        title: settings.appTitle || 'BINGO景品',
         autoHideMenuBar: false,
     });
 
@@ -147,6 +155,21 @@ function setupIPC() {
     // 景品データの保存
     ipcMain.handle('prizes:save', (_event, prizes) => {
         savePrizes(prizes);
+        return { success: true };
+    });
+
+    // 設定の読み込み
+    ipcMain.handle('settings:load', () => {
+        return loadSettings();
+    });
+
+    // 設定の保存
+    ipcMain.handle('settings:save', (_event, settings) => {
+        saveSettings(settings);
+        // ウィンドウタイトルも即座に更新
+        if (mainWindow) {
+            mainWindow.setTitle(settings.appTitle || 'BINGO景品');
+        }
         return { success: true };
     });
 

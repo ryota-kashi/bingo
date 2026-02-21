@@ -32,6 +32,18 @@ const btnGoBingo = document.getElementById('btn-go-bingo');
 async function init() {
     imagesPath = await window.electronAPI.getImagesPath();
     prizes = await window.electronAPI.loadPrizes();
+    
+    // 設定（タイトル）の読み込み
+    try {
+        const settings = await window.electronAPI.loadSettings();
+        const titleInput = document.getElementById('app-title-input');
+        if (settings && settings.appTitle && titleInput) {
+            titleInput.value = settings.appTitle;
+        }
+    } catch (err) {
+        console.error('設定の読み込みに失敗しました:', err);
+    }
+
     renderPrizeList();
     setupEventListeners();
 }
@@ -42,6 +54,21 @@ function setupEventListeners() {
     btnGoBingo.addEventListener('click', () => {
         window.electronAPI.navigateToBingo();
     });
+
+    // アプリタイトルの保存
+    const btnSaveSettings = document.getElementById('btn-save-settings');
+    if (btnSaveSettings) {
+        btnSaveSettings.addEventListener('click', async () => {
+            const titleInput = document.getElementById('app-title-input');
+            const newTitle = titleInput.value.trim();
+            if (!newTitle) {
+                showToast('タイトルを入力してください', 'error');
+                return;
+            }
+            await window.electronAPI.saveSettings({ appTitle: newTitle });
+            showToast('タイトルを保存しました ✅', 'success');
+        });
+    }
 
     // 画像選択
     btnSelectImage.addEventListener('click', handleSelectImage);

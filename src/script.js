@@ -230,6 +230,21 @@ async function startApp() {
                 });
             }
         }
+
+        // 設定（タイトル）を読み込んで反映
+        try {
+            const settings = await window.electronAPI.loadSettings();
+            if (settings && settings.appTitle) {
+                const titleEl = document.getElementById('app-title-display');
+                if (titleEl) {
+                    titleEl.textContent = settings.appTitle;
+                }
+                // ドキュメントタイトルも更新
+                document.title = `${settings.appTitle} - BINGO景品くじ`;
+            }
+        } catch (settingsErr) {
+            console.error('設定の読み込みに失敗しました:', settingsErr);
+        }
     } else {
         // 通常のブラウザ環境: フォールバックデータを使用
         originalPrizes = fallbackPrizes;

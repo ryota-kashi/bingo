@@ -15,6 +15,10 @@ contextBridge.exposeInMainWorld('electronAPI', {
     // パス取得
     getImagesPath: () => ipcRenderer.invoke('path:images'),
 
+    // 設定（タイトルなど）
+    loadSettings: () => ipcRenderer.invoke('settings:load'),
+    saveSettings: (settings) => ipcRenderer.invoke('settings:save', settings),
+
     // 画面切り替え
     navigateToBingo: () => ipcRenderer.invoke('navigate:bingo'),
     navigateToAdmin: () => ipcRenderer.invoke('navigate:admin'),
